@@ -56,28 +56,29 @@ module.exports = {
           id: existEmail.id,
         },
       });
-      // const transporter = nodemailer.createTransport  ({
-      //   host: 'smtp.gmail.com', 
-      //   port: 465,
-      //   secure: true,
-      //   auth:{
-      //     user: process.env.EMAIL_USER,
-      //     pass: process.env.EMAIL_PASSWORD,
-      //   }
-      // })  
-      // const mailOption = {
-      //   from: 'nextnitay06@gmail.com',
-      //   to : req.body.email,
-      //   subject: 'Reset-Password',
-      //   html: `<p> reset password <a href="localhost:4000/set-password/${encrypt}">click here </a>`
-      // }
-      // transporter.sendMail(mailOption,(err) => {
-      //   if(err){
-      //     console.log(err)
-      //     return res.render("error");
-      //   }
-      //   return res.render("success");
-      // })
+      const transporter = nodemailer.createTransport  ({
+        // host: 'smtp.gmail.com', 
+        // port: 465,
+        // secure: true,
+        service : 'gmail',
+        auth:{
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
+        }
+      })  
+      const mailOption = {
+        from: "Admin Binar",
+        to : req.body.email,
+        subject: 'Reset-Password',
+        html: `<p> reset password <a href="http://localhost:4000/set-password/${encrypt}">click here </a></p>`
+      }
+      transporter.sendMail(mailOption,(err) => {
+        if(err){
+          console.log(err)
+          return res.render("error");
+        }
+        return res.render("success");
+      })
       
     } catch (error) {
       console.log(error);
